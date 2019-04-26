@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore } from "redux";
 import axios from "axios";
 import { createLogger } from "redux-logger";
-import promise from "redux-promise-middleware";
+import { createPromise } from "redux-promise-middleware";
 
 const initialState = {
   fetching: false,
@@ -16,18 +16,19 @@ const reducer = (state = initialState, action) => {
       return { ...state, fetching: true };
     case "FETCH_USERS_REJECTED":
       return { ...state, fetching: false, error: action.payload };
-    case "RECEIVE_USERS":
+    case "FETCH_USERS_FULFILLED":
+      console.log(action);
       return {
         ...state,
         fetching: false,
         fetched: true,
-        users: action.payload
+        users: action.payload.data
       };
   }
   return state;
 };
 
-const middleware = applyMiddleware(promise(), createLogger());
+const middleware = applyMiddleware(createPromise(), createLogger());
 const store = createStore(reducer, middleware);
 
 store.dispatch({
