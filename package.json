@@ -46,5 +46,8 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "dependencies": {
+    "redux-thunk": "^2.3.0"
   }
 }
